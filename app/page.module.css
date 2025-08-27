@@ -14,7 +14,7 @@
 }
 
 .layoutpage {
-	grid-template-columns: 19rem 1fr 39rem;
+	grid-template-columns: 19rem 1fr min(30vw, 39rem);
 }
 
 .container {
@@ -26,7 +26,8 @@
 }
 
 .sidebar {
-	min-inline-size: 39rem;
+	/* inline-size: 39rem;
+	max-inline-size: 30%; */
 	padding-block: 1.8rem 2rem;
 	padding-inline: 2.5rem;
 	color: #fff;
