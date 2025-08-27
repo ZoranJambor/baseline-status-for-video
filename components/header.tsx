@@ -36,15 +36,15 @@ export default function Header() {
 						</Link>
 					</li>
 					<li>
-						<Link
-							href="/contact"
-							className={pathname === '/contact' ? styles.active : ''}
-						>
-							Contact
+						<Link href="mailto:info@css-weekly.com?subject=Baseline Status for Video Contact">
+							Contact <TbExternalLink />
 						</Link>
 					</li>
 					<li>
-						<Link target="_blank" href="">
+						<Link
+							target="_blank"
+							href="https://github.com/ZoranJambor/baseline-status-for-video/"
+						>
 							Fork on GitHub <TbExternalLink />
 						</Link>
 					</li>

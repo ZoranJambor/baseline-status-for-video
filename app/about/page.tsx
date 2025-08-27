@@ -153,7 +153,10 @@ export default function About() {
 								</Heading>
 								<Box as="ul" listStyleType="circle" mb={3} fontSize="xl" ml={4}>
 									<li>
-										<Link target="_blank" href="">
+										<Link
+											target="_blank"
+											href="https://github.com/ZoranJambor/baseline-status-for-video/"
+										>
 											Fork on GitHub <TbExternalLink />
 										</Link>
 									</li>
