@@ -1,0 +1,12 @@
+/* ... */
+
+.container {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+	padding-block: 1rem;
+	padding-inline: 2rem;
+	overflow: hidden;
+	border: none;
+}

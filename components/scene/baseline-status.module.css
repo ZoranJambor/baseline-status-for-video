@@ -1,0 +1,67 @@
+.webcomponent {
+	position: absolute;
+	z-index: 10;
+	inline-size: 33rem;
+	padding: 1.5rem 2rem 1rem;
+	margin-inline: auto;
+	color: hsl(0deg 0% 10%);
+	background: hsl(0deg 0% 255%);
+	scale: var(--scale, 1.4);
+	transition-timing-function: var(--transition-function, ease-in-out);
+	transition-duration: var(--transition-duration, 1s);
+	transition-property: all;
+	interpolate-size: allow-keywords;
+	transition-behavior: allow-discrete;
+}
+
+.dark {
+	color: #f5f4f7;
+	background: #1a1a1c;
+}
+
+.bottom {
+	inset: calc(100% - var(--margin-block, 5rem)) auto auto 50%;
+	inset: 100% auto auto 50%;
+	transform-origin: bottom center;
+	translate: -50% calc(-100% - var(--margin-block, 5rem));
+
+	&.hidewidget {
+		transform-origin: top center;
+		translate: -50% var(--margin-block, 5rem);
+	}
+}
+
+.top {
+	inset: 0% auto auto 50%;
+	transform-origin: top center;
+	translate: -50% var(--margin-block, 5rem);
+
+	&.hidewidget {
+		transform-origin: bottom center;
+		translate: -50% calc(-100% - var(--margin-block, 5rem));
+	}
+}
+
+.bottom-left {
+	inset: 100% auto auto 0%;
+	transform-origin: bottom left;
+	translate: var(--margin-inline, 5rem) calc(-100% - var(--margin-block, 5rem));
+
+	&.hidewidget {
+		transform-origin: bottom right;
+		translate: calc(-100% - var(--margin-inline, 5rem))
+			calc(-100% - var(--margin-block, 5rem));
+	}
+}
+
+.bottom-right {
+	inset: 100% 0% auto auto;
+	transform-origin: bottom right;
+	translate: calc(-1 * var(--margin-inline, 2rem)) calc(-100% - var(--margin-block, 5rem));
+
+	&.hidewidget {
+		transform-origin: bottom left;
+		translate: calc(100% + var(--margin-inline, 2rem))
+			calc(-100% - var(--margin-block, 5rem));
+	}
+}

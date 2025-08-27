@@ -1,0 +1,13 @@
+.stats p {
+	line-height: 1.1;
+	color: hsl(0deg 0% 93% / 60%);
+
+	&:not(:first-child) {
+		margin-block-start: 1rem;
+	}
+}
+
+.stats strong {
+	font-size: 2rem;
+	color: #fff;
+}

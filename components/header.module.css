@@ -1,0 +1,90 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: space-between;
+	min-inline-size: 15rem;
+	height: auto;
+	padding-block: 1rem;
+	padding-inline: 3rem;
+	margin-inline: -2.5rem;
+	overflow: hidden;
+}
+
+.logo {
+	margin-block-start: -5px;
+}
+
+.logo a {
+	padding: 0.5rem;
+	font-size: 1.8rem;
+}
+
+.menu ul {
+	display: flex;
+	flex-flow: column wrap;
+	gap: 0;
+	align-content: start;
+	justify-items: start;
+	margin: 0;
+}
+
+.menu a {
+	position: relative;
+	padding-block: 0.2rem;
+	padding-inline: 0.5rem;
+	transform-origin: bottom left;
+	transition: all 0.2s ease-in-out;
+
+	&::before {
+		position: absolute;
+		inset-block-end: -0.5rem;
+		inset-inline-start: 0.5rem;
+		display: block;
+		inline-size: calc(100% - 1rem);
+		block-size: 1px;
+		content: '';
+		border-bottom: 1px solid #fff;
+		opacity: 0;
+		transition: all 0.2s ease-in-out;
+	}
+}
+
+.menu a:hover,
+.menu a:active,
+.menu .active {
+	color: #fff;
+
+	&::before {
+		inset-block-end: 0.3rem;
+		opacity: 1;
+	}
+}
+
+.tagline {
+	padding: 0.5rem;
+}
+
+@media screen and (width <= 860px) {
+	.logo {
+		margin-inline: auto;
+	}
+
+	.logo a {
+		font-size: 1.4rem;
+	}
+
+	.menu ul {
+		flex-flow: row wrap;
+		gap: 0;
+		justify-content: center;
+	}
+
+	.tagline {
+		padding-block-start: 0;
+	}
+
+	.container {
+		padding-block-start: 0;
+	}
+}

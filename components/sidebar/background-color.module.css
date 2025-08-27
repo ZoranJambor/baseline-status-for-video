@@ -1,0 +1,25 @@
+.picker {
+	display: grid;
+	grid-template-columns: repeat(6, 1.8rem);
+	justify-content: space-between;
+	inline-size: 100%;
+	color: hsl(272deg 100% 95% / 70%);
+}
+
+.swatch > div {
+	inline-size: 1.8rem;
+	block-size: 1.8rem;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.swatch svg {
+	color: var(--outline, hsl(0deg 0% 0%));
+	stroke-width: 5px;
+}
+
+.swatch[data-state='checked'] {
+	outline: 2px solid hsl(0deg 100% 100% / 80%);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
