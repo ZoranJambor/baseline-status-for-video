@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 
 export const meta: Metadata = {
-	metadataBase: new URL('http://localhost:3000'),
+	metadataBase: new URL('https://baseline-status-for-video.css-weekly.com/'),
 	title: 'Baseline Status for Video',
-	description: 'The React Framework for the Web',
+	description:
+		'A handy online tool that will let you easily show Baseline Status in your videos.',
 	generator: 'Next.js',
 	applicationName: 'Baseline Status for Video',
 	keywords: ['Next.js', 'React', 'JavaScript', 'Baseline', 'CSS'],
