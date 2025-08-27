@@ -159,6 +159,7 @@ Contributions are most welcome! Here's how you can help:
 - **Baseline Status for Video app**: [https://baseline-status-for-video.css-weekly.com](https://baseline-status-for-video.css-weekly.com)
 - **Baseline website**: [https://web-platform-dx.github.io/web-features/](https://web-platform-dx.github.io/web-features/)
 - **Baseline Status Web Component**: [https://github.com/web-platform-dx/baseline-status](https://github.com/web-platform-dx/baseline-status)
+- **Feature ID list**: [https://github.com/web-platform-dx/web-features/tree/main/features](https://github.com/web-platform-dx/web-features/tree/main/features)
 
 ### 💝 Support the Project
 
