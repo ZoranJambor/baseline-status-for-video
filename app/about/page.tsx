@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 
 // Chakra UI
-import { Box, Heading, Text, VStack, Link } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Link, Image } from '@chakra-ui/react';
 import { TbExternalLink } from 'react-icons/tb';
 
 // Components
@@ -41,7 +41,12 @@ export default function About() {
 									your videos.
 									<br />
 								</Text>
-								<iframe
+								<Image
+									src="/baseline-status-for-video-og-image.jpg"
+									alt="Baseline Status for Video promo image"
+									className={`${aboutStyles.video}`}
+								/>
+								{/* <iframe
 									className={`${aboutStyles.video}`}
 									width="560"
 									height="315"
@@ -50,7 +55,7 @@ export default function About() {
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 									referrerPolicy="strict-origin-when-cross-origin"
 									allowFullScreen
-								></iframe>
+								></iframe> */}
 							</Box>
 
 							<Box>
