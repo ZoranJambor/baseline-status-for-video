@@ -71,6 +71,7 @@
 	}
 
 	.logo a {
+		align-items: center;
 		font-size: 1.4rem;
 	}
 
@@ -82,9 +83,11 @@
 
 	.tagline {
 		padding-block-start: 0;
+		padding-inline: 2rem;
 	}
 
 	.container {
+		align-items: center;
 		padding-block-start: 0;
 	}
 }
