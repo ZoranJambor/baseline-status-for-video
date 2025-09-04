@@ -15,7 +15,8 @@ export type MediaRecorderStatus =
 	| 'recording'
 	| 'finished'
 	| 'error'
-	| 'aborted';
+	| 'aborted'
+	| 'permission-denied';
 
 type UseScreenRecordingReturn = {
 	startRecording: () => Promise<MediaRecorderStatus | void>;
@@ -184,6 +185,7 @@ export function useScreenRecording({
 				if (e.target && (e.target as MediaRecorder).mimeType) {
 					setMimetype((e.target as MediaRecorder).mimeType);
 				}
+
 				if (isRecording.current) {
 					setStatus('finished');
 				}
@@ -210,11 +212,17 @@ export function useScreenRecording({
 			setHideUI(false);
 			await timeout(videoDelay * 1000);
 			setHideWidget(false);
-		} catch (error: unknown) {
+		} catch (error) {
+			let status: MediaRecorderStatus = 'aborted';
 			console.error('[Screen Recording] Recording failed:', error);
-			setStatus('aborted');
+
+			if (error instanceof Error && error.message.includes('denied')) {
+				status = 'permission-denied';
+			}
+
 			cleanup();
-			return 'aborted';
+			setStatus(status);
+			return status;
 		}
 	};
 

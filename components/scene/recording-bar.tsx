@@ -33,23 +33,39 @@ export default function RecordingBar({
 
 	useEffect(() => {
 		queueMicrotask(() => {
-			if (status === 'aborted') {
-				toaster.create({
-					title: 'Recording Failed',
-					description: 'Screen recording was cancelled or failed to start',
-					type: 'error',
-				});
-			} else if (status === 'error') {
-				toaster.create({
-					title: 'Video Processing Failed',
-					description: 'Failed to process the recorded video',
-					type: 'error',
-				});
-			} else if (status === 'finished' && videoUrl) {
-				toaster.create({
-					title: 'Video Successfully Recorded',
-					type: 'success',
-				});
+			switch (status) {
+				case 'permission-denied':
+					toaster.create({
+						title: 'Recording Failed',
+						description: 'You need to grant permission to record the screen.',
+						type: 'error',
+					});
+					break;
+				case 'aborted':
+					toaster.create({
+						title: 'Recording Failed',
+						description: 'Screen recording was cancelled.',
+						type: 'error',
+					});
+					break;
+				case 'error':
+					toaster.create({
+						title: 'Video Processing Failed',
+						description: 'Failed to process the recorded video.',
+						type: 'error',
+					});
+					break;
+				case 'finished':
+					if (videoUrl) {
+						toaster.create({
+							title: 'Video Successfully Recorded',
+							type: 'success',
+						});
+					}
+					break;
+				case 'inactive':
+				case 'recording':
+					break;
 			}
 		});
 	}, [status, videoUrl]);
