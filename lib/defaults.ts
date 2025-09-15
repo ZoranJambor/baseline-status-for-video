@@ -1,7 +1,11 @@
 import { Options } from '@/lib/definitions';
 
-// ChakraUI color picker accepts hsla format,
-// that's why it must be used here
+/**
+ * Color swatches for the background color picker. Uses HSLA
+ * because ChakraUI's color picker component requires this
+ * format. Each swatch includes an outline color for proper
+ * contrast when the widget is displayed.
+ */
 export const swatches = [
 	{ name: 'red', code: 'hsla(333.6, 90.4%, 16.3%, 1)', outline: 'hsl(0deg 0% 100%)' },
 	{ name: 'green', code: 'hsla(111, 100%, 50%, 1)', outline: 'hsl(0deg 0% 0%)' },
@@ -11,6 +15,9 @@ export const swatches = [
 	{ name: 'skyblue', code: 'hsla(210, 96.8%, 48.6%, 1)', outline: 'hsl(0deg 0% 100%)' },
 ];
 
+/**
+ * CSS transition timing functions for widget animations.
+ */
 /* prettier-ignore */
 export const transitions = [
 	{ label: 'ease', value: 'ease' },
@@ -29,9 +36,16 @@ export const transitions = [
 	{ label: 'linear', value: 'linear' },
 ];
 
+/**
+ * Default configuration values for the application.
+ * These values are used when the app first loads and
+ * provide sensible defaults for all customizable options.
+ */
 export const initialOptions: Options = {
 	featureId: 'anchor-positioning',
-	color: swatches[0],
+	showFeatureDescription: false,
+	featureDescription: '',
+	color: swatches[0], // Default to first color (red)
 	position: 'bottom',
 	scale: 1.4,
 	videoLength: 1,
