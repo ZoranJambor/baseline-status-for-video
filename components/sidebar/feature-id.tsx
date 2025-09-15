@@ -23,20 +23,7 @@ export default function FeatureId(props: OptionsProps) {
 				return changeFeatureId(target.value);
 			}}
 		>
-			<Field.Label>
-				Feature Id
-				{/* <Field.HelperText> */}
-				<small style={{ display: 'none' }}>
-					(You can find the list of ids in{' '}
-					<Link
-						href="https://github.com/web-platform-dx/web-features/tree/main/features"
-						target="_blank"
-					>
-						web-features repository)
-					</Link>
-				</small>
-				{/* </Field.HelperText> */}
-			</Field.Label>
+			<Field.Label>Feature Id</Field.Label>
 			<Field.ErrorText>The featureId is required</Field.ErrorText>
 			<Input
 				variant="subtle"
@@ -45,9 +32,19 @@ export default function FeatureId(props: OptionsProps) {
 				rounded={'lg'}
 				name="featureId"
 				data-testid="featureId"
-				// placeholder="featureId"
 				defaultValue={options.featureId}
 			/>
+			<Field.HelperText color={'purple.300'}>
+				List of IDs:{' '}
+				<Link
+					href="https://github.com/web-platform-dx/web-features/tree/main/features"
+					target="_blank"
+					textDecoration={'underline'}
+				>
+					web-features repository
+				</Link>
+				.
+			</Field.HelperText>
 		</Field.Root>
 	);
 }
