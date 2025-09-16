@@ -85,6 +85,7 @@ npm run start        # Start production server
 npm run test          # Run tests in watch mode
 npm run test:once     # Run tests once
 npm run coverage      # Generate coverage report
+npm run test:ui       # Run test in the Browser UI
 
 # Code Quality
 npm run lint          # Run Next.js lint
