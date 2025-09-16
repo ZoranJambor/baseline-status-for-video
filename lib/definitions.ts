@@ -17,6 +17,8 @@ export type Options = {
 	transitionDuration: number;
 	transitionFunction: string;
 	colorScheme: 'light' | 'dark';
+	showFeatureDescription: boolean;
+	featureDescription: string;
 };
 
 export type DispatchAction = {
@@ -35,5 +37,5 @@ export type OptionsProps = {
 export type Action = {
 	id: string;
 	type: 'changed';
-	value: string | number | Swatch;
+	value: string | number | Swatch | boolean;
 };

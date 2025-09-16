@@ -8,6 +8,7 @@ import { OptionsProps } from '@/lib/definitions';
 
 // Scene Components
 import FeatureId from '@/components/sidebar/feature-id';
+import FeatureDescription from '@/components/sidebar/feature-description';
 import BackgroundColor from '@/components/sidebar/background-color';
 import Position from '@/components/sidebar/position';
 import Scale from '@/components/sidebar/scale';
@@ -39,6 +40,7 @@ export default function SidebarOptions(props: OptionsProps) {
 				setHideWidget={props.setHideWidget}
 			/>
 			<ColorScheme options={options} dispatch={props.dispatch} />
+			<FeatureDescription options={options} dispatch={props.dispatch} />
 		</Box>
 	);
 }
