@@ -14,7 +14,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Feature Id', () => {
+describe('Option Feature Id', () => {
 	test('Feature Id input is rendered', async () => {
 		const input: HTMLInputElement = screen.getByTestId('featureId');
 

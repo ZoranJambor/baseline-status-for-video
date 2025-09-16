@@ -17,7 +17,7 @@ vi.mock('@/components/sidebar/transition-function');
 
 // Only select needs to be mocked, everything else can be
 // tested properly, hece the two files
-describe('Transition Function Select', () => {
+describe('Option Transition Function Select', () => {
 	test('Changing Transition Function works', async () => {
 		const select: HTMLSelectElement = screen.getByTestId('transitionFunction');
 		await waitFor(() => {

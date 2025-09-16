@@ -18,7 +18,7 @@ vi.mock('@/components/ui/toaster', () => ({
 	},
 }));
 
-describe('RecordingBar', () => {
+describe('Recording Bar', () => {
 	const mockProps = {
 		options: {
 			...initialOptions,

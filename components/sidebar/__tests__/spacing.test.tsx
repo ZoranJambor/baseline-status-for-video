@@ -19,7 +19,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Component Margin Spacing', () => {
+describe('Option Margin Spacing', () => {
 	test('CSS Properties are rendered on the web component', async () => {
 		await waitFor(() => {
 			screen.getByTestId('BaselineStatusComponent');

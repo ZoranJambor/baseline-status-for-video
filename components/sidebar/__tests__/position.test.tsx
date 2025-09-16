@@ -15,7 +15,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Component Position', () => {
+describe('Option Position', () => {
 	test('Position icons are rendered', () => {
 		for (const position of positions) {
 			expect(screen.getByTestId(`position-${position.value}`)).toBeInTheDocument();

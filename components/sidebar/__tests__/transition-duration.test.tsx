@@ -17,7 +17,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Component Transition Duration', () => {
+describe('Option Transition Duration', () => {
 	test('CSS Property is rendered on the web component', async () => {
 		await waitFor(() => {
 			screen.getByTestId('BaselineStatusComponent');

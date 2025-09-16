@@ -15,7 +15,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Component Color Scheme', () => {
+describe('Option Color Scheme', () => {
 	test('Color Scheme icons are rendered', () => {
 		expect(screen.getByTestId('colorSchemeLight')).toBeInTheDocument();
 		expect(screen.getByTestId('colorSchemeDark')).toBeInTheDocument();

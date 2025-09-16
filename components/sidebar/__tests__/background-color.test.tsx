@@ -14,7 +14,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Component Background Color', () => {
+describe('Option Background Color', () => {
 	test('Color swatches are rendered', () => {
 		for (const swatch of swatches) {
 			expect(screen.getByTestId(swatch.name)).toBeInTheDocument();

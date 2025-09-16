@@ -17,7 +17,7 @@ beforeEach(async () => {
 	});
 });
 
-describe('Component Size / Scale', () => {
+describe('Option Size / Scale', () => {
 	test('CSS Property is rendered on the web component', async () => {
 		await waitFor(() => {
 			screen.getByTestId('BaselineStatusComponent');

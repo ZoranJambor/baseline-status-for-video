@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest';
 import { render } from '@/lib/test-render';
 import { VideoPreviewDialog } from '../video-preview-dialog';
 
-describe('VideoPreviewDialog', () => {
+describe('Video Preview Dialog', () => {
 	const mockProps = {
 		videoUrl: 'https://example.com/video.mp4',
 		featureId: 'test-feature',

@@ -18,7 +18,7 @@ beforeEach(async () => {
 // Baseline Status Web Component needs to be mocked
 vi.mock('@/components/sidebar/transition-duration');
 
-describe('Transition Function', () => {
+describe('Option Transition Duration', () => {
 	test('Elements are rendered', async () => {
 		const select: HTMLSelectElement = screen.getByTestId('transitionFunction');
 
