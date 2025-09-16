@@ -41,52 +41,119 @@ const useBaselineStatusRef = (options: ShadowDOMOptions, dispatch: DispatchActio
 			// Only proceed if node and shadowRoot exist (web component is ready)
 			if (node !== null && node.shadowRoot) {
 				const shadowRoot = node.shadowRoot;
-				const details = shadowRoot.querySelector('details');
-				const originalDescription = shadowRoot.querySelector(
-					'summary + p'
-				) as HTMLParagraphElement | null;
-				const featureDescription = shadowRoot.querySelector(
-					'#feature-description'
-				) as HTMLParagraphElement | null;
 
-				if (!originalDescription) {
-					console.warn('Original description element not found in shadow DOM');
-					return;
-				}
+				const waitForElement = () => {
+					const details = shadowRoot.querySelector('details');
+					const originalDescription = shadowRoot.querySelector(
+						'summary + p'
+					) as HTMLParagraphElement | null;
+					const featureDescription = shadowRoot.querySelector(
+						'#feature-description'
+					) as HTMLParagraphElement | null;
 
-				// Setup shadow DOM elements (custom styling and elements)
-				setupShadowElements(shadowRoot, details);
+					if (!originalDescription) {
+						// Use MutationObserver to wait for the element to appear
+						const observer = new MutationObserver(() => {
+							const originalDescription = shadowRoot.querySelector(
+								'summary + p'
+							) as HTMLParagraphElement | null;
+							if (originalDescription) {
+								// Cleanup
+								observer.disconnect();
+								clearTimeout(observerTimeout);
 
-				// Sync the details element's open state with our React state
-				details?.toggleAttribute('open', options.showFeatureDescription);
+								const details = shadowRoot.querySelector('details');
+								const featureDescription = shadowRoot.querySelector(
+									'#feature-description'
+								) as HTMLParagraphElement | null;
 
-				// Setup event listener to keep React state in sync with DOM changes
-				const handleDetailsToggle = () => {
-					const isOpen = details?.hasAttribute('open') ?? false;
+								// Setup shadow DOM elements (custom styling and elements)
+								setupShadowElements(shadowRoot, details);
 
-					// Only dispatch if the state has
-					// changed to avoid unnecessary
-					// re-renders
-					if (isOpen !== options.showFeatureDescription) {
-						dispatch({
-							type: 'changed',
-							id: 'showFeatureDescription',
-							value: isOpen,
+								// Sync the details element's open state with our React state
+								details?.toggleAttribute('open', options.showFeatureDescription);
+
+								// Setup event listener to keep React state in sync with DOM changes
+								const handleDetailsToggle = () => {
+									const isOpen = details?.hasAttribute('open') ?? false;
+
+									// Only dispatch if the state has
+									// changed to avoid unnecessary
+									// re-renders
+									if (isOpen !== options.showFeatureDescription) {
+										dispatch({
+											type: 'changed',
+											id: 'showFeatureDescription',
+											value: isOpen,
+										});
+									}
+								};
+
+								// Remove any existing listener first to avoid duplicates
+								details?.removeEventListener('toggle', handleDetailsToggle);
+								details?.addEventListener('toggle', handleDetailsToggle);
+
+								// Store reference for cleanup
+								node._detailsToggleHandler = handleDetailsToggle;
+
+								// Update feature description visibility based on current options
+								if (featureDescription) {
+									updateFeatureDescription(
+										originalDescription,
+										featureDescription,
+										options
+									);
+								}
+							}
 						});
+
+						observer.observe(shadowRoot, { childList: true, subtree: true });
+
+						// Fallback timeout
+						const observerTimeout = setTimeout(() => {
+							observer.disconnect();
+							console.warn('Timeout waiting for baseline-status component.');
+						}, 10000);
+
+						return;
+					}
+
+					// Setup shadow DOM elements (custom styling and elements)
+					setupShadowElements(shadowRoot, details);
+
+					// Sync the details element's open state with our React state
+					details?.toggleAttribute('open', options.showFeatureDescription);
+
+					// Setup event listener to keep React state in sync with DOM changes
+					const handleDetailsToggle = () => {
+						const isOpen = details?.hasAttribute('open') ?? false;
+
+						// Only dispatch if the state has
+						// changed to avoid unnecessary
+						// re-renders
+						if (isOpen !== options.showFeatureDescription) {
+							dispatch({
+								type: 'changed',
+								id: 'showFeatureDescription',
+								value: isOpen,
+							});
+						}
+					};
+
+					// Remove any existing listener first to avoid duplicates
+					details?.removeEventListener('toggle', handleDetailsToggle);
+					details?.addEventListener('toggle', handleDetailsToggle);
+
+					// Store reference for cleanup
+					node._detailsToggleHandler = handleDetailsToggle;
+
+					// Update feature description visibility based on current options
+					if (featureDescription) {
+						updateFeatureDescription(originalDescription, featureDescription, options);
 					}
 				};
 
-				// Remove any existing listener first to avoid duplicates
-				details?.removeEventListener('toggle', handleDetailsToggle);
-				details?.addEventListener('toggle', handleDetailsToggle);
-
-				// Store reference for cleanup
-				node._detailsToggleHandler = handleDetailsToggle;
-
-				// Update feature description visibility based on current options
-				if (featureDescription) {
-					updateFeatureDescription(originalDescription, featureDescription, options);
-				}
+				waitForElement();
 			}
 		},
 		[options, dispatch]
