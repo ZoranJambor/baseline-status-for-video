@@ -1,12 +1,12 @@
 import DOMPurify from 'dompurify';
-
+import { useDebouncedCallback } from 'use-debounce';
 import { Textarea, Field, Switch, HStack } from '@chakra-ui/react';
 import { OptionsProps } from '@/lib/definitions';
 
 export default function FeatureDescription(props: OptionsProps) {
 	const { options } = props;
 
-	const handleDescriptionChange = (event: React.SyntheticEvent) => {
+	const handleDescriptionChange = useDebouncedCallback((event: React.SyntheticEvent) => {
 		const target = event.target as HTMLInputElement;
 		let value = target.value.trim();
 
@@ -20,7 +20,7 @@ export default function FeatureDescription(props: OptionsProps) {
 			id: 'featureDescription',
 			value: value,
 		});
-	};
+	}, 200);
 
 	return (
 		<Field.Root mt={5} required>
@@ -55,6 +55,7 @@ export default function FeatureDescription(props: OptionsProps) {
 				name="featureDescription"
 				data-testid="featureDescription"
 				onChange={handleDescriptionChange}
+				defaultValue={options.featureDescription}
 			/>
 			<Field.HelperText
 				mt={1}

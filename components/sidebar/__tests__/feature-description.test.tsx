@@ -114,18 +114,17 @@ describe('Feature Description Integration Tests', () => {
 		await waitFor(() => {
 			render(<Home />);
 		});
+
+		// Wait for the persisted state to load
+		await waitFor(() => {
+			screen.getByTestId('BaselineStatusComponent');
+		});
 	});
 
 	test('Feature Description switch and textarea are rendered', async () => {
 		const descriptionSwitch = screen.getByTestId('showFeatureDescriptionSwitch');
 		const checkbox: HTMLInputElement = screen.getByTestId('showFeatureDescription');
 		const textarea: HTMLTextAreaElement = screen.getByTestId('featureDescription');
-
-		// BaseLineStatus is loaded with next/dynamic
-		// so we're making sure it's loaded here
-		await waitFor(() => {
-			screen.getByTestId('BaselineStatusComponent');
-		});
 
 		expect(checkbox).toBeInTheDocument();
 		expect(checkbox.checked).toBe(initialOptions.showFeatureDescription);
@@ -139,10 +138,6 @@ describe('Feature Description Integration Tests', () => {
 	test('Changing Show Feature Description works', async () => {
 		const checkbox: HTMLInputElement = screen.getByTestId('showFeatureDescription');
 		const textarea: HTMLTextAreaElement = screen.getByTestId('featureDescription');
-
-		await waitFor(() => {
-			screen.getByTestId('BaselineStatusComponent');
-		});
 
 		// Initially hidden
 		expect(textarea).toHaveAttribute('hidden');
@@ -159,20 +154,16 @@ describe('Feature Description Integration Tests', () => {
 		const textarea: HTMLTextAreaElement = screen.getByTestId('featureDescription');
 		const checkbox: HTMLInputElement = screen.getByTestId('showFeatureDescription');
 
-		await waitFor(() => {
-			screen.getByTestId('BaselineStatusComponent');
-		});
-
 		// First show the textarea
-		await act(async () => {
-			fireEvent.click(checkbox);
+		fireEvent.click(checkbox);
+
+		// Wait for the state to update
+		await waitFor(() => {
+			expect(textarea).not.toHaveAttribute('hidden');
 		});
-		expect(textarea).not.toHaveAttribute('hidden');
 
 		// Then test input
-		await act(async () => {
-			fireEvent.change(textarea, { target: { value: 'Integration test description' } });
-		});
+		fireEvent.change(textarea, { target: { value: 'Integration test description' } });
 
 		expect(textarea.value).toBe('Integration test description');
 	});
