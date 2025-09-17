@@ -60,6 +60,18 @@ if (typeof window.matchMedia !== 'function') {
 // Override globalThis
 Object.assign(global, { window, document: window.document });
 
+// localStorage mock
+const localStorageMock = {
+	getItem: vi.fn(() => null),
+	setItem: vi.fn(),
+	removeItem: vi.fn(),
+	clear: vi.fn(),
+};
+Object.defineProperty(window, 'localStorage', {
+	value: localStorageMock,
+	writable: true,
+});
+
 // --- FFmpeg mock with per-test customization ---
 let nextMockFFmpegInstance: unknown = null;
 function createMockFFmpegInstance() {
@@ -98,3 +110,8 @@ vi.mock('@/components/scene/baseline-status', async () => {
 	);
 	return { BaselineStatusComponent: BaselineStatusComponentMock };
 });
+
+// Mock use-debounce to execute immediately in tests
+vi.mock('use-debounce', () => ({
+	useDebouncedCallback: (callback: Function, delay: number) => callback,
+}));

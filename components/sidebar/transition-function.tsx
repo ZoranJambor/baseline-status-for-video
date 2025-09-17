@@ -9,9 +9,7 @@ import {
 import { useState } from 'react';
 
 import { OptionsProps } from '@/lib/definitions';
-import { initialOptions, transitions } from '@/lib/defaults';
-// import { TbPlayerPlayFilled } from 'react-icons/tb';
-// import { TbReplaceFilled } from 'react-icons/tb';
+import { transitions } from '@/lib/defaults';
 
 export default function TransitionFunction(props: OptionsProps) {
 	const { options } = props;
@@ -40,7 +38,7 @@ export default function TransitionFunction(props: OptionsProps) {
 						return;
 					}}
 					size="md"
-					defaultValue={[initialOptions.transitionFunction]}
+					defaultValue={[options.transitionFunction]}
 				>
 					<Select.HiddenSelect data-testid="transitionFunction" />
 					<Select.Label>Transition Function</Select.Label>
@@ -53,6 +51,7 @@ export default function TransitionFunction(props: OptionsProps) {
 								<Select.Indicator />
 							</Select.IndicatorGroup>
 						</Select.Control>
+
 						<Button
 							disabled={previewActive ? true : false}
 							size="md"
@@ -73,15 +72,13 @@ export default function TransitionFunction(props: OptionsProps) {
 							data-testid="previewButton"
 						>
 							Preview
-							{/* <TbPlayerPlayFilled /> */}
-							{/* <TbReplaceFilled /> */}
 						</Button>
 					</HStack>
 					<Portal>
 						<Select.Positioner>
 							<Select.Content>
 								{transitions1.items.map((transition) => (
-									<Select.Item item={transition} key={transition.value} width="150px">
+									<Select.Item item={transition} key={transition.value}>
 										{transition.label}
 										<Select.ItemIndicator />
 									</Select.Item>

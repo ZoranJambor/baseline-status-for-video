@@ -11,7 +11,7 @@ export default function ColorScheme(props: OptionsProps) {
 			align="center"
 			justify="center"
 			maxW="lg"
-			defaultValue="light"
+			defaultValue={props.options.colorScheme}
 			mt={5}
 			size="sm"
 			onChange={(event: React.SyntheticEvent) => {

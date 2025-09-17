@@ -1,14 +1,13 @@
 'use client';
 
 // React
-import { useReducer, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // Chakra UI
 import { Box } from '@chakra-ui/react';
 
-// Lib
-import { initialOptions } from '@/lib/defaults';
-import optionsReducer from '@/lib/options-reducer';
+// Hooks
+import { usePersistedState } from '@/hooks/usePersistedState';
 
 // Components
 import Main from '@/components/scene/main';
@@ -18,9 +17,10 @@ import SidebarOptions from '@/components/sidebar-options';
 
 // Styles
 import styles from '@/app/page.module.css';
+import loader from '@/app/loadership.module.css';
 
 export default function Home() {
-	const [options, dispatch] = useReducer(optionsReducer, initialOptions);
+	const [options, dispatch, isLoaded] = usePersistedState();
 	const [hideUI, setHideUI] = useState<boolean>(false);
 	const [hideWidget, setHideWidget] = useState<boolean>(false);
 	const hideClass = hideUI ? styles.hideui : '';
@@ -38,6 +38,33 @@ export default function Home() {
 			document.removeEventListener('keydown', keyDownHandler);
 		};
 	}, []);
+
+	// Loading screen
+	if (!isLoaded) {
+		return (
+			<div className={`${styles.layout}`} data-testid="loading-page">
+				<Box className={styles.menu}>
+					<Header />
+					<Footer />
+				</Box>
+				<div className={`${loader.loadership} ${styles.loader}`}>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<Box className={`${styles.container} ${styles['sidebar-loading']}`}></Box>
+			</div>
+		);
+	}
 
 	return (
 		<>

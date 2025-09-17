@@ -35,6 +35,17 @@
 	border-radius: var(--border-radius);
 }
 
+.sidebar-loading {
+	grid-row: 1 / 2;
+	grid-column: 3 / 4;
+}
+
+.loader {
+	grid-row: 1 / 2;
+	grid-column: 2 / 3;
+	margin: auto;
+}
+
 .menu {
 	--focus-ring-offset: 0;
 
