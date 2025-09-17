@@ -21,8 +21,24 @@ import {
 } from '@/lib/baseline-status-helpers';
 
 /**
- * Custom hook that manages the baseline-status web component's shadow DOM manipulation.
- * This hook handles the complex task of:
+ * Helper function to get shadow DOM elements
+ */
+const getShadowDOMElements = (shadowRoot: ShadowRoot) => {
+	return {
+		details: shadowRoot.querySelector('details') as HTMLDetailsElement | null,
+		originalDescription: shadowRoot.querySelector(
+			'summary + p'
+		) as HTMLParagraphElement | null,
+		featureDescription: shadowRoot.querySelector(
+			'#feature-description'
+		) as HTMLParagraphElement | null,
+	};
+};
+
+/**
+ * Custom hook that manages the baseline-status web
+ * component's shadow DOM manipulation.
+ * This hook handles:
  * 1. Setting up custom elements and styling within the web component's shadow DOM
  * 2. Syncing React state with the web component's internal state
  * 3. Managing event listeners for user interactions
@@ -43,35 +59,34 @@ const useBaselineStatusRef = (options: ShadowDOMOptions, dispatch: DispatchActio
 				const shadowRoot = node.shadowRoot;
 
 				const waitForElement = () => {
-					const details = shadowRoot.querySelector('details');
-					const originalDescription = shadowRoot.querySelector(
-						'summary + p'
-					) as HTMLParagraphElement | null;
-					const featureDescription = shadowRoot.querySelector(
-						'#feature-description'
-					) as HTMLParagraphElement | null;
+					const { details, originalDescription } = getShadowDOMElements(shadowRoot);
 
 					if (!originalDescription) {
 						// Use MutationObserver to wait for the element to appear
 						const observer = new MutationObserver(() => {
-							const originalDescription = shadowRoot.querySelector(
-								'summary + p'
-							) as HTMLParagraphElement | null;
+							const { details, originalDescription } = getShadowDOMElements(shadowRoot);
 							if (originalDescription) {
 								// Cleanup
 								observer.disconnect();
 								clearTimeout(observerTimeout);
 
-								const details = shadowRoot.querySelector('details');
+								// Setup shadow DOM elements (custom styling and elements)
+								setupShadowElements(shadowRoot, details);
+
+								// Get the newly created feature description element
 								const featureDescription = shadowRoot.querySelector(
 									'#feature-description'
 								) as HTMLParagraphElement | null;
 
-								// Setup shadow DOM elements (custom styling and elements)
-								setupShadowElements(shadowRoot, details);
-
-								// Sync the details element's open state with our React state
+								// Initial setup of feature description and details state with current options
 								details?.toggleAttribute('open', options.showFeatureDescription);
+								if (featureDescription) {
+									updateFeatureDescription(
+										originalDescription,
+										featureDescription,
+										options
+									);
+								}
 
 								// Setup event listener to keep React state in sync with DOM changes
 								const handleDetailsToggle = () => {
@@ -95,15 +110,6 @@ const useBaselineStatusRef = (options: ShadowDOMOptions, dispatch: DispatchActio
 
 								// Store reference for cleanup
 								node._detailsToggleHandler = handleDetailsToggle;
-
-								// Update feature description visibility based on current options
-								if (featureDescription) {
-									updateFeatureDescription(
-										originalDescription,
-										featureDescription,
-										options
-									);
-								}
 							}
 						});
 
@@ -121,8 +127,16 @@ const useBaselineStatusRef = (options: ShadowDOMOptions, dispatch: DispatchActio
 					// Setup shadow DOM elements (custom styling and elements)
 					setupShadowElements(shadowRoot, details);
 
-					// Sync the details element's open state with our React state
+					// Get the newly created feature description element
+					const featureDescription = shadowRoot.querySelector(
+						'#feature-description'
+					) as HTMLParagraphElement | null;
+
+					// Initial setup of feature description and details state with current options
 					details?.toggleAttribute('open', options.showFeatureDescription);
+					if (originalDescription && featureDescription) {
+						updateFeatureDescription(originalDescription, featureDescription, options);
+					}
 
 					// Setup event listener to keep React state in sync with DOM changes
 					const handleDetailsToggle = () => {
@@ -146,18 +160,33 @@ const useBaselineStatusRef = (options: ShadowDOMOptions, dispatch: DispatchActio
 
 					// Store reference for cleanup
 					node._detailsToggleHandler = handleDetailsToggle;
-
-					// Update feature description visibility based on current options
-					if (featureDescription) {
-						updateFeatureDescription(originalDescription, featureDescription, options);
-					}
 				};
 
 				waitForElement();
 			}
 		},
-		[options, dispatch]
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[dispatch]
 	);
+
+	// Handle options changes after initial setup to prevent
+	// race conditions between component's shadow DOM and
+	// localStorage in persistent state
+	useEffect(() => {
+		if (nodeRef.current?.shadowRoot) {
+			const shadowRoot = nodeRef.current.shadowRoot;
+			const { details, originalDescription, featureDescription } =
+				getShadowDOMElements(shadowRoot);
+
+			// Update the details open state
+			details?.toggleAttribute('open', options.showFeatureDescription);
+
+			// Update feature description content if elements exist
+			if (originalDescription && featureDescription) {
+				updateFeatureDescription(originalDescription, featureDescription, options);
+			}
+		}
+	}, [options]);
 
 	// Cleanup on unmount to prevent memory leaks
 	useEffect(() => {
