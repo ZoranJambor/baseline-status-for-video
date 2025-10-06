@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 
 // Chakra UI
-import { Box, Heading, Text, VStack, Link, Image } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Link } from '@chakra-ui/react';
 import { TbExternalLink } from 'react-icons/tb';
 
 // Components
@@ -41,21 +41,21 @@ export default function About() {
 									your videos.
 									<br />
 								</Text>
-								<Image
+								{/* <Image
 									src="/baseline-status-for-video-og-image.jpg"
 									alt="Baseline Status for Video promo image"
 									className={`${aboutStyles.video}`}
-								/>
-								{/* <iframe
-									className={`${aboutStyles.video}`}
+								/> */}
+								<iframe
 									width="560"
 									height="315"
-									src="https://www.youtube.com/embed/_cA-NBVVv7E?si=MdsEWCjn7hcS0vB6"
-									title="Baseline Status for Video intro"
+									className={`${aboutStyles.video}`}
+									src="https://www.youtube.com/embed/Pa9gpjT2nUs?si=qnluyu42zdChF4dR"
+									title="How to use Baseline Status for Video "
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 									referrerPolicy="strict-origin-when-cross-origin"
 									allowFullScreen
-								></iframe> */}
+								></iframe>
 							</Box>
 
 							<Box>
